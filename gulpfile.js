@@ -5,6 +5,7 @@ const browserify = require("browserify");
 const source = require("vinyl-source-stream");
 const project = tsc.createProject("tsconfig.json");
 const mergeStream = require("merge-stream");
+const rimraf = require("rimraf");
 
 gulp.task("build", function () {
   return gulp
@@ -16,6 +17,7 @@ gulp.task("build", function () {
 gulp.task(
   "bundle",
   gulp.series("build", function () {
+    rimraf.sync("dist");
     let ts = browserify("build/main.js")
       .bundle()
       .pipe(source("bundle.js"))
@@ -42,7 +44,7 @@ gulp.task(
   "default",
   gulp.parallel("serve", function () {
     gulp.watch(
-      "src/*",
+      "src/**",
       gulp.series("bundle", function (done) {
         browserSync.reload();
         done();

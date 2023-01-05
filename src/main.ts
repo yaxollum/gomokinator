@@ -30,4 +30,17 @@ function rememberInput(name: string, restoreDefault: string, def: string) {
   rememberInput("line-colour", "line-colour-restore", "#505050");
   rememberInput("black-piece-colour", "black-piece-colour-restore", "#000000");
   rememberInput("white-piece-colour", "white-piece-colour-restore", "#EEEEEE");
+  const playButton = document.getElementById("play") as HTMLButtonElement;
+  playButton.onclick = () => {
+    location.href = "play";
+  };
+};
+
+(window as any).playPage = function () {
+  const boardContainer = document.getElementById("main-board")!;
+  const app = new PIXI.Application({
+    resizeTo: boardContainer,
+    backgroundAlpha: 0,
+  });
+  boardContainer.appendChild(app.view as HTMLCanvasElement);
 };

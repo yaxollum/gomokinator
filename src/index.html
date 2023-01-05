@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <title>Hello World</title>
+    <style>
+      .big-button {
+        font-size: 200%;
+      }
+    </style>
   </head>
   <body>
     <h1>Gomokinator</h1>
@@ -26,7 +31,8 @@
       <input type="color" id="white-piece-colour" />
       <button id="white-piece-colour-restore">Restore Default ↺</button>
     </p>
-    <script src="bundle.js"></script>
+    <button class="big-button" id="play">Play!</button>
+    <script src="/bundle.js"></script>
     <script>
       window.addEventListener("load", mainPage);
     </script>
