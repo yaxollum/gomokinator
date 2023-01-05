@@ -18,20 +18,19 @@
         margin: 5px;
       }
       .player-info {
-        color: red;
         margin: 2px;
       }
     </style>
   </head>
   <body>
     <div id="main-container">
-      <div class="player-info">Player 1</div>
+      <div class="player-info" id="player1-info">Player 1</div>
       <div id="main-board"></div>
-      <div class="player-info">Player 2</div>
+      <div class="player-info" id="player2-info">Player 2</div>
     </div>
     <script src="/bundle.js"></script>
     <script>
-      window.addEventListener("load", playPage);
+      window.addEventListener("load", gomokinator.playMain);
     </script>
   </body>
 </html>

@@ -8,6 +8,7 @@ const mergeStream = require("merge-stream");
 const rimraf = require("rimraf");
 
 gulp.task("build", function () {
+  rimraf.sync("build");
   return gulp
     .src(["src/**/**.ts"])
     .pipe(project())
@@ -18,11 +19,11 @@ gulp.task(
   "bundle",
   gulp.series("build", function () {
     rimraf.sync("dist");
-    let ts = browserify("build/main.js")
+    let ts = browserify("build/root.js")
       .bundle()
       .pipe(source("bundle.js"))
       .pipe(gulp.dest("dist/"));
-    let html = gulp.src("src/**/**.html").pipe(gulp.dest("dist"));
+    let html = gulp.src("src/html/**").pipe(gulp.dest("dist"));
     return mergeStream(ts, html);
   })
 );
