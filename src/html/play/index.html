@@ -12,10 +12,14 @@
         flex-direction: column;
         height: 100vh;
       }
-      #main-board {
+      #main-board-wrapper {
         flex-grow: 1;
         min-height: 0;
         margin: 5px;
+      }
+      #main-board {
+        max-width: 100%;
+        max-height: 100%;
       }
       .player-info {
         margin: 2px;
@@ -25,7 +29,9 @@
   <body>
     <div id="main-container">
       <div class="player-info" id="player1-info">Player 1</div>
-      <div id="main-board"></div>
+      <div id="main-board-wrapper">
+        <canvas id="main-board"></canvas>
+      </div>
       <div class="player-info" id="player2-info">Player 2</div>
     </div>
     <script src="/bundle.js"></script>
