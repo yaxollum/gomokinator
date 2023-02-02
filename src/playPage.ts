@@ -20,12 +20,32 @@ export function playMain() {
     ctx.moveTo(conv(x1), conv(y1));
     ctx.lineTo(conv(x2), conv(y2));
   };
-  ctx.beginPath();
-  for (let i = 1; i <= boardSize; ++i) {
-    drawLine(i, 1, i, boardSize);
-    drawLine(1, i, boardSize, i);
-  }
-  ctx.stroke();
+  let drawBoard = () => {
+    ctx.clearRect(0, 0, w, w);
+    ctx.beginPath();
+    for (let i = 1; i <= boardSize; ++i) {
+      drawLine(i, 1, i, boardSize);
+      drawLine(1, i, boardSize, i);
+    }
+    ctx.stroke();
+  };
+
+  let handleMouseMove = (ev: MouseEvent) => {
+    drawBoard();
+    let rect = c.getBoundingClientRect();
+    ctx.beginPath();
+    ctx.arc(
+      ((ev.clientX - rect.left) / c.clientWidth) * w,
+      ((ev.clientY - rect.top) / c.clientHeight) * w,
+      boxSize / 2.5,
+      0,
+      2 * Math.PI,
+      false
+    );
+    ctx.fillStyle = settings.whitePieceColour.get();
+    ctx.fill();
+  };
+  c.addEventListener("mousemove", handleMouseMove);
 
   const player1Info = document.getElementById("player1-info")!;
   const player2Info = document.getElementById("player2-info")!;
