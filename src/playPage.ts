@@ -1,4 +1,5 @@
 import { settings } from "./settings";
+import { boardSize, newGame } from "./game";
 
 export function playMain() {
   const c = document.getElementById("main-board") as HTMLCanvasElement;
@@ -12,14 +13,16 @@ export function playMain() {
   ctx.scale(dpi, dpi);
 
   const boardMargin = 0.5;
-  const boardSize = 15;
   const boxSize = w / (boardMargin * 2 + boardSize - 1);
   ctx.lineWidth = boxSize / 20;
   let conv = (x: number) => (x - 1 + boardMargin) * boxSize;
+  let revConv = (x: number) =>
+    Math.min(boardSize, Math.max(1, Math.round(x / boxSize - boardMargin + 1)));
   let drawLine = (x1: number, y1: number, x2: number, y2: number) => {
     ctx.moveTo(conv(x1), conv(y1));
     ctx.lineTo(conv(x2), conv(y2));
   };
+  let game = newGame();
   let drawBoard = () => {
     ctx.clearRect(0, 0, w, w);
     ctx.beginPath();
@@ -33,17 +36,16 @@ export function playMain() {
   let handleMouseMove = (ev: MouseEvent) => {
     drawBoard();
     let rect = c.getBoundingClientRect();
+    let x = revConv(((ev.clientX - rect.left) / c.clientWidth) * w);
+    let y = revConv(((ev.clientY - rect.top) / c.clientHeight) * w);
     ctx.beginPath();
-    ctx.arc(
-      ((ev.clientX - rect.left) / c.clientWidth) * w,
-      ((ev.clientY - rect.top) / c.clientHeight) * w,
-      boxSize / 2.5,
-      0,
-      2 * Math.PI,
-      false
-    );
+    ctx.arc(conv(x), conv(y), boxSize / 2.5, 0, 2 * Math.PI, false);
+
+    ctx.save();
     ctx.fillStyle = settings.whitePieceColour.get();
+    ctx.globalAlpha = 0.5;
     ctx.fill();
+    ctx.restore();
   };
   c.addEventListener("mousemove", handleMouseMove);
 
